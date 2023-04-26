@@ -1,9 +1,16 @@
 import express from 'express';
+import session from 'express-session';
 
 import warehousesRoutes from './routes/warehouses.routes.js';
 import usersRoutes from './routes/users.routes.js';
 
 const app = express();
+
+app.use(session({
+    secret: 'secret-key',
+    resave: true,
+    saveUninitialized: true,
+}));
 
 app.use(express.json());
 
