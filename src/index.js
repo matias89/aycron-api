@@ -1,10 +1,17 @@
 import express from 'express';
+import cors from 'cors';
 import session from 'express-session';
 
 import warehousesRoutes from './routes/warehouses.routes.js';
 import usersRoutes from './routes/users.routes.js';
 
 const app = express();
+
+app.use(cors(
+    {
+        origin: 'http://localhost:3000',
+    }
+));
 
 app.use(session({
     secret: 'secret-key',

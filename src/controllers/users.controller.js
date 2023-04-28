@@ -9,7 +9,6 @@ export const UserRegistration = async (req, res) => {
             id: rows.insertId,
             name,
             email,
-            password: hashedPassword
         };
         return res.status(201).json(newUser);
     }
