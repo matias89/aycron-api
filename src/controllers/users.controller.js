@@ -7,15 +7,16 @@ export const UserRegistration = async (req, res) => {
         const [result] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
         console.log(result);
         if (result.length > 0) {
-            return res.status(400).json({ message: 'User exists' });
+            return res.status(400).json({ message: 'User exists', status: 400 });
         }
         const [rows] = await pool.query('INSERT INTO users (name, email, role, password) VALUES (?, ?, ?, ?)', [name, email, role, hashedPassword]);
-        const newUser = {
+        return res.status(201).json({
+            message: 'User created',
+            status: 201,
             id: rows.insertId,
             name,
             email,
-        };
-        return res.status(201).json(newUser);
+        });
     }
     catch (error) {
         console.log(error);
@@ -33,12 +34,24 @@ export const UserLogin = async (req, res) => {
         const user = rows[0];
         const isPasswordValid = await bcryptjs.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(400).json({ message: 'Invalid credentials', isLogged: false });
+            return res.status(400).json({
+                message: 'Invalid credentials',
+                isLogged: false,
+                status: 400,
+            });
         }
-        return res.status(200).json({ message: 'Login successful', isLogged: true, name: user.name });
+        return res.status(200).json({
+            message: 'Login successful',
+            isLogged: true,
+            name: user.name,
+            status: 200,
+        });
     }
     catch (error) {
         console.log(error);
-        return res.status(500).json(error);
+        return res.status(500).json({
+            message: 'Something went wrong',
+            status: 500,
+        });
     }
 }
