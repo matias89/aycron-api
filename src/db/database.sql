@@ -25,3 +25,15 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
+
+ALTER TABLE warehouses ADD COLUMN lat float DEFAULT NULL;
+ALTER TABLE warehouses ADD COLUMN lng float DEFAULT NULL;
+
+SELECT id, ( 3959 * acos( cos( radians(-26.8675) ) * cos( radians( lat ) ) * 
+cos( radians( lng ) - radians(-65.2141) ) + sin( radians(-26.8675) ) * 
+sin( radians( lat ) ) ) ) AS distance FROM warehouses HAVING
+distance < 25 ORDER BY distance LIMIT 0 , 3;
+
+ALTER TABLE warehouses ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE warehouses ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+ALTER TABLE warehouses ADD COLUMN filename VARCHAR(255) DEFAULT NULL;
