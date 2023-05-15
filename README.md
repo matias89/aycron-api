@@ -1,11 +1,3 @@
-<div align="center" id="top"> 
-  <img src="./.github/app.gif" alt="Aycron Api" />
-
-  &#xa0;
-
-  <!-- <a href="https://aycronapi.netlify.app">Demo</a> -->
-</div>
-
 <h1 align="center">Aycron Api</h1>
 
 <p align="center">
